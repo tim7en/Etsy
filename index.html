@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etsy Seller Roadmap Dashboard</title>
+  <style>
+    /* Base page styling */
+    body {
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f9fc;
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 2em;
+      text-align: center;
+      color: #34495e;
+    }
+    p.description {
+      text-align: center;
+      color: #7f8c8d;
+      margin-bottom: 30px;
+    }
+    /* Tree styles */
+    .tree ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 1.2em;
+      border-left: 2px solid #e0e6ed;
+    }
+    .tree li {
+      margin: 0.5em 0;
+      position: relative;
+    }
+    .tree li::before {
+      content: "";
+      position: absolute;
+      top: 0.9em;
+      left: -1.2em;
+      width: 1.2em;
+      border-top: 2px solid #e0e6ed;
+    }
+    .toggle {
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      color: #2c7be5;
+      transition: color 0.2s ease;
+    }
+    .toggle:hover {
+      color: #1a5bb8;
+      text-decoration: none;
+    }
+    /* plus/minus icons via pseudo-elements */
+    .toggle::before {
+      content: "+";
+      display: inline-block;
+      width: 1em;
+      margin-right: 0.3em;
+      font-weight: bold;
+      color: #20bf6b;
+    }
+    .toggle.expanded::before {
+      content: "–"; /* en dash minus sign */
+      color: #e74c3c;
+    }
+    .content {
+      margin-top: 0.4em;
+      padding-left: 1.5em;
+      color: #4d6276;
+      border-left: 1px dashed #dfe6ed;
+    }
+    .content p {
+      margin: 0.2em 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Etsy Seller Roadmap</h1>
+    <p class="description">Follow this step‑by‑step plan to create and sell digital products on Etsy using AI tools. Click each heading to expand or collapse the details.</p>
+    <div id="tree" class="tree"></div>
+  </div>
+  <script>
+    // Hierarchical data representing the Etsy roadmap. Each node can have a title, optional content and children.
+    const treeData = [
+      {
+        title: "1. Market Research & Niche Selection",
+        children: [
+          {
+            title: "Start with what’s selling",
+            content: "Look for popular digital product types on Etsy such as printable wall art, planners, invitations, SVGs, templates, etc. Choose a niche based on existing demand."
+          },
+          {
+            title: "Go deep in a niche",
+            content: "Specialize in a single niche by creating multiple related items. For example, create a suite of wedding printables or a range of meal planners for different diets."
+          },
+          {
+            title: "Use ChatGPT for brainstorming",
+            content: "Ask ChatGPT to suggest trending digital download products and niche ideas to spark creativity."
+          },
+          {
+            title: "Validate with Etsy search",
+            content: "Search Etsy to gauge competition and demand. Analyze top listings’ pricing, keywords, and design quality."
+          },
+          {
+            title: "Choose an automatable product type",
+            content: "Prioritize product types that can be generated or updated with AI, such as planners, invitations, prompt packs, templates, coloring pages, puzzles, or SVG clipart."
+          },
+          {
+            title: "Niche research checklist",
+            content: "Pick a niche and product type; identify competitor shops; list potential keywords for SEO."
+          }
+        ]
+      },
+      {
+        title: "2. Planning Your First Products",
+        children: [
+          {
+            title: "Outline product content",
+            content: "Use ChatGPT to outline pages, prompts, or content for your product. Let AI generate lists (e.g., journal prompts, affirmations, quotes) to include."
+          },
+          {
+            title: "Plan variations and sets",
+            content: "Create multiple versions of a base design (e.g. fitness, nutrition, study habit trackers). Offer bundles to increase order value."
+          },
+          {
+            title: "Leverage your tools",
+            content: "Use Canva Pro to duplicate and adapt templates, ChatGPT Pro for brainstorming and writing, and GitHub Copilot for automating repetitive tasks (optional)."
+          },
+          {
+            title: "Example: Prompt pack",
+            content: "Generate 30-day mindfulness prompts with ChatGPT, design pages in Canva, and export as a PDF."
+          }
+        ]
+      },
+      {
+        title: "3. Creating Your First Digital Products",
+        children: [
+          {
+            title: "Design with Canva Pro",
+            content: "Use templates and premium elements, maintain consistent style, save master templates, and export in appropriate formats (PDF/PNG/JPEG)."
+          },
+          {
+            title: "Quality check your products",
+            content: "Proofread text, ensure correct sizing, test files on different devices, and use only polished AI-generated images."
+          },
+          {
+            title: "Repeat for a small batch",
+            content: "Create 5–10 products in your niche. Focus on quality and consistency rather than quantity."
+          },
+          {
+            title: "Keep it simple & manageable",
+            content: "Aim for clean, simple designs at first. Use ChatGPT to generate text and instructions. Improve designs over time."
+          }
+        ]
+      },
+      {
+        title: "4. Automating Product Generation & Listing",
+        children: [
+          {
+            title: "Clone and tweak vs starting fresh",
+            content: "Develop reusable templates and workflows to save time. Duplicate designs and swap colors, fonts, or content to create new products."
+          },
+          {
+            title: "Multiply content with ChatGPT",
+            content: "Ask ChatGPT to brainstorm product variations and generate large lists of prompts or tips for new products."
+          },
+          {
+            title: "Automate repetitive tasks with Copilot",
+            content: "Use GitHub Copilot to write scripts for tasks such as merging images into a PDF or generating color variations (optional)."
+          },
+          {
+            title: "Prepare listing content",
+            content: "Create templates for product titles, descriptions, and FAQs. Use ChatGPT to draft and refine copy; batch similar tasks for efficiency."
+          },
+          {
+            title: "Stay organized and batch work",
+            content: "Keep master files organized, track products and keywords in a spreadsheet, and work on similar tasks in batches to reduce context switching."
+          }
+        ]
+      },
+      {
+        title: "5. Designing Eye-Catching Listing Images",
+        children: [
+          {
+            title: "Use mockups to show the product",
+            content: "Create appealing mockups of your digital download in use (e.g. printable on a clipboard, template on a device). Use Canva’s frames and mockups to display your product."
+          },
+          {
+            title: "Highlight key features in images",
+            content: "Add text or badges to communicate features such as ‘30 pages’, ‘Editable in Canva’, or ‘A4 & Letter sizes’. Use clear fonts and contrasting colors."
+          },
+          {
+            title: "Keep branding consistent",
+            content: "Maintain cohesive style across your shop: use consistent colors, fonts, and backgrounds. Use Canva Pro’s brand kit to help."
+          },
+          {
+            title: "Ensure high image quality",
+            content: "Use high-resolution images; show multiple angles or pages; export at recommended sizes (e.g. 2700×2025 px). Avoid blurry or cluttered visuals."
+          },
+          {
+            title: "Seek inspiration and tools",
+            content: "Look at top sellers’ listing images for ideas. Use free mockup resources or create your own scenes in Canva to showcase your products."
+          }
+        ]
+      },
+      {
+        title: "6. Writing Optimized Titles, Tags & Descriptions",
+        children: [
+          {
+            title: "Craft an effective title",
+            content: "Write a clear, keyword-rich title with up to 140 characters. Front-load important keywords and describe the product (e.g. ‘Printable Budget Planner – Undated Finance PDF, Expense Tracker’). Use ChatGPT to generate ideas."
+          },
+          {
+            title: "Choose 13 tags wisely",
+            content: "Use all available tag slots with a mix of single words and long-tail phrases. Include synonyms and variations. Ask ChatGPT to suggest tag ideas, then refine with Etsy search suggestions."
+          },
+          {
+            title: "Write a persuasive description",
+            content: "Start with a hook; list benefits and uses; bullet out what’s included; note the format and size; provide download instructions; and add a friendly closing. Use ChatGPT to draft and adjust tone."
+          },
+          {
+            title: "Avoid keyword stuffing",
+            content: "Ensure titles and descriptions read naturally. Focus on clarity and benefits to the customer rather than cramming keywords."
+          }
+        ]
+      },
+      {
+        title: "7. Launching Your Etsy Shop & First Listings",
+        children: [
+          {
+            title: "Set up shop basics",
+            content: "Choose a shop name related to your niche, design a logo and banner in Canva, write an About section, and set shop policies for digital products."
+          },
+          {
+            title: "List your products",
+            content: "Upload images and files, set pricing, add keywords and tags, and write descriptions. Use bundles and freebies strategically. Ensure proper categories and attributes."
+          },
+          {
+            title: "Promote your launch",
+            content: "Consider offering a launch discount, share your shop with friends and on social media, and encourage reviews. Provide quick customer support."
+          },
+          {
+            title: "Use referral for free listings",
+            content: "Seek a referral link for 40 free Etsy listings to avoid listing fees when starting."
+          }
+        ]
+      },
+      {
+        title: "8. Tracking Performance & Adjusting",
+        children: [
+          {
+            title: "Monitor Etsy stats",
+            content: "Check views, favorites, and search terms in Etsy’s Stats. Identify listings with high views but low conversions to improve images or descriptions."
+          },
+          {
+            title: "Refine SEO and listings",
+            content: "Adjust titles and tags based on real search data. Experiment with seasonal or alternative keywords. Swap underperforming tags and test new ones."
+          },
+          {
+            title: "Expand and refine your catalog",
+            content: "Add new products regularly; double down on bestsellers; improve or retire poor performers; create bundles and upsells."
+          },
+          {
+            title: "Practice patience and persistence",
+            content: "Sales may take time. Use feedback and analytics to learn and improve. Stay motivated by celebrating small wins and continuously iterating."
+          }
+        ]
+      },
+      {
+        title: "9. Conclusion & Next Steps",
+        content: "Keep a beginner’s mindset: experiment, learn, and adjust. Use AI tools to work smarter, create quality products, optimize your listings, and track progress. Celebrate milestones and aim for continuous growth."
+      }
+    ];
+
+    /**
+     * Recursively build an HTML list from a node object.
+     * Each node becomes an <li> with a clickable title and optional nested children.
+     * @param {Object} item - A node with title, content and children.
+     * @returns {HTMLElement} The generated list item element.
+     */
+    function createNode(item) {
+      const li = document.createElement('li');
+      // clickable title
+      const toggle = document.createElement('span');
+      toggle.className = 'toggle';
+      toggle.textContent = item.title;
+      toggle.addEventListener('click', function () {
+        const contentDiv = li.querySelector('.content');
+        const childList = li.querySelector('ul');
+        const isExpanded = toggle.classList.toggle('expanded');
+        if (contentDiv) {
+          contentDiv.style.display = isExpanded ? 'block' : 'none';
+        }
+        if (childList) {
+          childList.style.display = isExpanded ? 'block' : 'none';
+        }
+      });
+      li.appendChild(toggle);
+      // description/content
+      if (item.content) {
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'content';
+        contentDiv.style.display = 'none';
+        const p = document.createElement('p');
+        p.textContent = item.content;
+        contentDiv.appendChild(p);
+        li.appendChild(contentDiv);
+      }
+      // recursive children
+      if (item.children && item.children.length > 0) {
+        const ul = document.createElement('ul');
+        ul.style.display = 'none';
+        item.children.forEach(child => {
+          ul.appendChild(createNode(child));
+        });
+        li.appendChild(ul);
+      }
+      return li;
+    }
+    /**
+     * Build the entire tree and append to the container.
+     * @param {Array} data - Top-level array of nodes.
+     * @param {HTMLElement} container - DOM element where the tree will be rendered.
+     */
+    function buildTree(data, container) {
+      const ul = document.createElement('ul');
+      data.forEach(item => {
+        ul.appendChild(createNode(item));
+      });
+      container.appendChild(ul);
+    }
+    // Initialize the tree on page load
+    buildTree(treeData, document.getElementById('tree'));
+  </script>
+</body>
+</html>
